@@ -10,6 +10,7 @@ Features
 
 Todo
 ====
- * Media file loading screen
  * Shader loading
+ * Media file loading screen
+ * Fullwindow mode
 
