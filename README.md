@@ -9,6 +9,7 @@ Features
 
 Todo
 ====
+ * Frame controll
  * Media file loading screen
  * Shader loading
 

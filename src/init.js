@@ -15,3 +15,17 @@ function esInitCanvas(tagId) {
 	return gl;
 }
 
+function esNextFrame(func) {
+	var lastTime = Date.now();
+
+	function clo() {
+		var now = Date.now();
+		if (!func((now - lastTime) * 0.001)) {
+			window.requestAnimationFrame(clo);
+		}
+		lastTime = now;
+	}
+
+	window.requestAnimationFrame(clo);
+}
+
