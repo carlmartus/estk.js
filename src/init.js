@@ -1,4 +1,4 @@
-function esInitCanvas(tagId) {
+function esInitGl(tagId) {
 	var tag = document.getElementById(tagId);
 
 	var gl = null;
@@ -13,6 +13,11 @@ function esInitCanvas(tagId) {
 	}
 
 	return gl;
+}
+
+function esInitSw(tagId) {
+	var tag = document.getElementById(tagId);
+	return tag.getContext('2d');
 }
 
 function esNextFrame(func) {
