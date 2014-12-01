@@ -29,6 +29,10 @@ esProgram.prototype.addShaderId = function(idName, type) {
 	this.gl.attachShader(this.program, compileShader(this.gl, text, type));
 }
 
+esProgram.prototype.getUniform = function(name) {
+	return this.gl.getUniformLocation(this.program, name);
+}
+
 esProgram.prototype.link = function() {
 	this.gl.linkProgram(this.program);
 }

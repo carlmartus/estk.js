@@ -3,6 +3,29 @@
 <head>
 <meta charset="utf-8">
 <script type="text/javascript" src="../estk.min.js"></script>
+
+<script type="x-shader/x-vertex" id="vertex">
+#version 100
+precision mediump float;
+attribute vec3 vert;
+uniform float time;
+
+void main() {
+	gl_PointSize = vert.z;
+	gl_Position = vec4(
+		vert.x + 0.2 * cos(time * vert.z),
+		vert.y + 0.2 * sin(time * vert.z), 0.0, 1.0);
+}
+</script>
+
+<script type="x-shader/x-fragment" id="fragment">
+#version 100
+precision mediump float;
+
+void main() {
+	gl_FragColor = vec4(0.0, 0.5, 0.0, 1.0);
+}
+</script>
 </head>
 
 <body onload="main()">
@@ -10,17 +33,48 @@
 
 <script>
 var gl;
+var timeUniform;
+var startTime;
 
 function frame(frameTime) {
-	//console.log(frameTime);
+	var now = Date.now() * 0.001;
+
 	gl.clearColor(0.6, 0.7, 0.8, 1.0);
 	gl.clear(gl.COLOR_BUFFER_BIT);
+
+	gl.uniform1f(timeUniform, now - startTime);
+
+	gl.enableVertexAttribArray(0);
+	gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+
+	gl.drawArrays(gl.POINTS, 0, 2);
+	gl.disableVertexAttribArray(0);
+
 	return false; // Returning true means closing loop
 }
 
 function main() {
 	gl = esInitGl('can');
 	esNextFrame(frame);
+
+	startTime = Date.now() * 0.001;
+
+	// Vbo
+	var vertData = new Float32Array([
+			0.0, 0.0, 10.0,
+			0.3, 0.6, 20.0,
+	]);
+	var vbo = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+	gl.bufferData(gl.ARRAY_BUFFER, vertData, gl.STATIC_DRAW);
+
+	// Program
+	var program = new esProgram(gl);
+	program.addShaderId('vertex', ES_VERTEX);
+	program.addShaderId('fragment', ES_FRAGMENT);
+	program.link();
+	timeUniform = program.getUniform('time');
+	program.use();
 }
 </script>
 </body>

@@ -8,26 +8,6 @@
 <body onload="main()">
 <canvas width="400" height="300" id="can"></canvas>
 
-<script type="x-shader/x-vertex" id="vertex">
-#version 100
-precision mediump float;
-attribute vec3 vert;
-
-void main() {
-	gl_PointSize = vert.z;
-	gl_Position = vec4(vert.xy, 0.0, 1.0);
-}
-</script>
-
-<script type="x-shader/x-fragment" id="fragment">
-#version 100
-precision mediump float;
-
-void main() {
-	gl_FragColor = vec4(0.0, 0.5, 0.0, 1.0);
-}
-</script>
-
 <script>
 function main() {
 	var gl = esInitGl('can');
@@ -47,10 +27,13 @@ function main() {
 			0.3, 0.6, 20.0,
 	]);
 
+	// Vbo
 	var vbo = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
 	gl.bufferData(gl.ARRAY_BUFFER, vertData, gl.STATIC_DRAW);
 
+
+	// Draw
 	gl.enableVertexAttribArray(0);
 	gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
 
