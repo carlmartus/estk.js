@@ -7,10 +7,11 @@ Features
 ========
  * Canvas initialization
  * Frame controll
+ * Shader loading
 
 Todo
 ====
- * Shader loading
  * Media file loading screen
  * Fullwindow mode
+ * Texture creation assist
 

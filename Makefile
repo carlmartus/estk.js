@@ -1,6 +1,6 @@
 OUTPUT=estk.js
 MINI=estk.min.js
-SRC=src/init.js src/shader.js
+SRC=src/init.js src/shader.js src/load.js
 
 .PHONEY: all clean
 
