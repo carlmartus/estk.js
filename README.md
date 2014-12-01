@@ -13,6 +13,7 @@ Features
 
 Todo
 ====
+ * Fullframe mode (mobile)
  * Texture creation assist
  * Projection tools
 
