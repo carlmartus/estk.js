@@ -44,11 +44,7 @@ function frame(frameTime) {
 
 	gl.uniform1f(timeUniform, now - startTime);
 
-	gl.enableVertexAttribArray(0);
-	gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
-
 	gl.drawArrays(gl.POINTS, 0, 2);
-	gl.disableVertexAttribArray(0);
 
 	return false; // Returning true means closing loop
 }
@@ -75,6 +71,10 @@ function main() {
 	program.link();
 	timeUniform = program.getUniform('time');
 	program.use();
+
+	// Rendering prereration
+	gl.enableVertexAttribArray(0);
+	gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
 }
 </script>
 </body>
