@@ -1,12 +1,39 @@
 var ES_VERTEX = 1;
 var ES_FRAGMENT = 2;
 
-function esShader(gl) {
+function esProgram(gl) {
 	this.gl = gl;
 	this.program = gl.createProgram();
 }
 
-esShader.prototype.addShaderId = function(shader, idName, type) {
-	this.gl.createShader(type);
+function compileShader(gl, text, type) {
+	if (type == ES_VERTEX) {
+		type = gl.VERTEX_SHADER;
+	} else {
+		type = gl.FRAGMENT_SHADER;
+	}
+
+	var shader = gl.createShader(type);
+	gl.shaderSource(shader, text);
+	gl.compileShader(shader);
+
+	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+		alert(gl.getShaderInfoLog(shader));
+	}
+
+	return shader;
+}
+
+esProgram.prototype.addShaderId = function(idName, type) {
+	var text = document.getElementById(idName).text;
+	this.gl.attachShader(this.program, compileShader(this.gl, text, type));
+}
+
+esProgram.prototype.link = function() {
+	this.gl.linkProgram(this.program);
+}
+
+esProgram.prototype.use = function() {
+	this.gl.useProgram(this.program);
 }
 

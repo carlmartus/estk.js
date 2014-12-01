@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="../estk.min.js"></script>
+</head>
+
+<body onload="main()">
+<canvas width="400" height="300" id="can"></canvas>
+
+<script type="x-shader/x-vertex" id="vertex">
+#version 100
+precision mediump float;
+attribute vec3 vert;
+
+void main() {
+	gl_PointSize = vert.z;
+	gl_Position = vec4(vert.xy, 0.0, 1.0);
+}
+</script>
+
+<script type="x-shader/x-fragment" id="fragment">
+#version 100
+precision mediump float;
+
+void main() {
+	gl_FragColor = vec4(0.0, 0.5, 0.0, 1.0);
+}
+</script>
+
+<script>
+function main() {
+	var gl = esInitCanvas('can');
+
+	gl.clearColor(0.6, 0.7, 0.8, 1.0);
+	gl.clear(gl.COLOR_BUFFER_BIT);
+
+	var program = new esProgram(gl);
+	program.addShaderId('vertex', ES_VERTEX);
+	program.addShaderId('fragment', ES_FRAGMENT);
+	program.link();
+
+	program.use();
+
+	var vertData = new Float32Array([
+			0.0, 0.0, 10.0,
+			0.3, 0.6, 20.0,
+	]);
+
+	var vbo = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+	gl.bufferData(gl.ARRAY_BUFFER, vertData, gl.STATIC_DRAW);
+
+	gl.enableVertexAttribArray(0);
+	gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+
+	gl.drawArrays(gl.POINTS, 0, 2);
+}
+</script>
+</body>
+
+</html>
+
