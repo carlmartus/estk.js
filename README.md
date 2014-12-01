@@ -8,10 +8,11 @@ Features
  * Canvas initialization
  * Frame controll
  * Shader loading
+ * Media loading
 
 Todo
 ====
- * Media file loading screen
+ * Loading screen
  * Fullwindow mode
  * Texture creation assist
 
