@@ -9,10 +9,10 @@ Features
  * Frame controll
  * Shader loading
  * Media loading
+ * Fullframe mode
 
 Todo
 ====
- * Loading screen
- * Fullwindow mode
  * Texture creation assist
+ * Projection tools
 

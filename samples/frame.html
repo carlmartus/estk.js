@@ -13,8 +13,8 @@ uniform float time;
 void main() {
 	gl_PointSize = vert.z;
 	gl_Position = vec4(
-		vert.x + 0.2 * cos(time * vert.z),
-		vert.y + 0.2 * sin(time * vert.z), 0.0, 1.0);
+		vert.x + 0.2 * cos(time * 0.2 * vert.z),
+		vert.y + 0.2 * sin(time * 0.2 * vert.z), 0.0, 1.0);
 }
 </script>
 
@@ -31,10 +31,20 @@ void main() {
 <body onload="main()">
 <canvas width="400" height="300" id="can"></canvas>
 
+<button onclick="gofull();">Full frame</button>
+
 <script>
 var gl;
 var timeUniform;
 var startTime;
+
+function resizeEvent(w, h) {
+	gl.viewport(0, 0, w, h);
+}
+
+function gofull() {
+	esFullFrame("can", resizeEvent);
+}
 
 function frame(frameTime) {
 	var now = Date.now() * 0.001;

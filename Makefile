@@ -1,6 +1,6 @@
 OUTPUT=estk.js
 MINI=estk.min.js
-SRC=src/init.js src/shader.js src/load.js
+SRC=src/init.js src/shader.js src/load.js src/full.js
 
 .PHONEY: all clean
 
@@ -13,4 +13,4 @@ $(MINI): $(OUTPUT)
 	yui-compressor $< -o $@
 
 clean:
-	$(RM) $(OUTPUT)
+	$(RM) $(OUTPUT) $(MINI)
