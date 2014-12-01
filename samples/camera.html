@@ -7,11 +7,10 @@
 <script type="x-shader/x-vertex" id="vertex">
 #version 100
 precision mediump float;
-attribute vec3 vert;
+attribute vec2 vert;
 
 void main() {
-	gl_PointSize = vert.z;
-	gl_Position = vec4(vert.xy, 0.0, 1.0);
+	gl_Position = vec4(vert, 0.0, 1.0);
 }
 </script>
 
@@ -20,7 +19,7 @@ void main() {
 precision mediump float;
 
 void main() {
-	gl_FragColor = vec4(0.0, 0.5, 0.0, 1.0);
+	gl_FragColor = vec4(0.0, 0.5, 0.5, 1.0);
 }
 </script>
 </head>
@@ -32,9 +31,6 @@ void main() {
 function main() {
 	var gl = esInitGl('can');
 
-	gl.clearColor(0.6, 0.7, 0.8, 1.0);
-	gl.clear(gl.COLOR_BUFFER_BIT);
-
 	// Shader
 	var program = new esProgram(gl);
 	program.addShaderId('vertex', ES_VERTEX);
@@ -44,18 +40,22 @@ function main() {
 
 	// Vbo
 	var vertData = new Float32Array([
-			0.0, 0.0, 10.0,
-			0.3, 0.6, 20.0,
+			0.0, 0.0,
+			0.1, 0.0,
+			0.0, 0.1,
 	]);
 	var vbo = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
 	gl.bufferData(gl.ARRAY_BUFFER, vertData, gl.STATIC_DRAW);
 
+	gl.clearColor(0.6, 0.7, 0.8, 1.0);
+	gl.clear(gl.COLOR_BUFFER_BIT);
+
 	// Draw
 	gl.enableVertexAttribArray(0);
-	gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+	gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
-	gl.drawArrays(gl.POINTS, 0, 2);
+	gl.drawArrays(gl.TRIANGES, 0, 3);
 }
 </script>
 </body>

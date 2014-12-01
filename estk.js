@@ -149,59 +149,59 @@ function esFullFrame(tagId, resizeCallback) {
 // Vector 3 components
 // ===================
 
-function vec3_create() {
+function esVec3_create() {
 	return new Float32Array([0.0, 0.0, 0.0]);
 }
 
-function vec3_parse(x, y, z) {
+function esVec3_parse(x, y, z) {
 	return new Float32Array([x, y, z]);
 }
 
-function vec3_add(out, v0, v1) {
+function esVec3_add(out, v0, v1) {
 	out[0] = v0[0] + v1[0];
 	out[1] = v0[1] + v1[1];
 	out[2] = v0[2] + v1[2];
 }
 
-function vec3_sub(out, v0, v1) {
+function esVec3_sub(out, v0, v1) {
 	out[0] = v0[0] - v1[0];
 	out[1] = v0[1] - v1[1];
 	out[2] = v0[2] - v1[2];
 }
 
-function vec3_mulk(out, v, k) {
+function esVec3_mulk(out, v, k) {
 	out[0] = k*v[0];
 	out[1] = k*v[1];
 	out[2] = k*v[2];
 }
 
-function vec3_length(v) {
+function esVec3_length(v) {
 	return Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
 }
 
-function vec3_dot(v0, v1) {
+function esVec3_dot(v0, v1) {
 	return v0[0]*v1[0] + v0[1]*v1[1] + v0[2]*v1[2];
 }
 
-function vec3_isZero(v) {
+function esVec3_isZero(v) {
 	return v[0]==0.0 && v[1]==0.0 && v[2]==0.0;
 }
 
-function vec3_cross(out, v0, v1) {
+function esVec3_cross(out, v0, v1) {
 	out[0] = v0[1]*v1[2] - v0[2]*v1[1];
 	out[1] = v0[2]*v1[0] - v0[0]*v1[2];
 	out[2] = v0[0]*v1[1] - v0[1]*v1[0];
 }
 
-function vec3_normalize(out, v) {
-	var inv = 1.0 / vec3_length(v);
+function esVec3_normalize(out, v) {
+	var inv = 1.0 / esVec3_length(v);
 	out[0] = inv*v[0];
 	out[1] = inv*v[1];
 	out[2] = inv*v[2];
 }
 
 // Martix 4x4 component
-function mat4_create() {
+function esMat4_create() {
 	return new Float32Array([
 			0.0, 0.0, 0.0, 0.0,
 			0.0, 0.0, 0.0, 0.0,
@@ -209,7 +209,7 @@ function mat4_create() {
 			0.0, 0.0, 0.0, 0.0]);
 }
 
-function mat4_identity(out) {
+function esMat4_identity(out) {
 	out[ 0] = 1.0;
 	out[ 1] = out[ 2] = out[ 3] = 0.0;
 
@@ -223,7 +223,7 @@ function mat4_identity(out) {
 	out[12] = out[13] = out[14] = 0.0;
 }
 
-function mat4_mul(out, m0, m1) {
+function esMat4_mul(out, m0, m1) {
 	out[ 0] = m0[ 0]*m1[ 0] + m0[ 1]*m1[ 4] + m0[ 2]*m1[ 8] + m0[ 3]*m1[12];
 	out[ 1] = m0[ 0]*m1[ 1] + m0[ 1]*m1[ 5] + m0[ 2]*m1[ 9] + m0[ 3]*m1[13];
 	out[ 2] = m0[ 0]*m1[ 2] + m0[ 1]*m1[ 6] + m0[ 2]*m1[10] + m0[ 3]*m1[14];
@@ -245,16 +245,16 @@ function mat4_mul(out, m0, m1) {
 	out[15] = m0[12]*m1[ 3] + m0[13]*m1[ 7] + m0[14]*m1[11] + m0[15]*m1[15];
 }
 
-function mat4_lookAt(out, eye, at, up) {
-	var forw = vec3_create();
-	vec3_sub(forw, at, eye);
-	vec3_normalize(forw, forw);
+function esMat4_lookAt(out, eye, at, up) {
+	var forw = esVec3_create();
+	esVec3_sub(forw, at, eye);
+	esVec3_normalize(forw, forw);
 
-	var side = vec3_create();
-	vec3_cross(side, up, forw);
-	vec3_normalize(side, side);
+	var side = esVec3_create();
+	esVec3_cross(side, up, forw);
+	esVec3_normalize(side, side);
 
-	var m0 = mat4_create();
+	var m0 = esMat4_create();
 	m0[ 0] = side[0];
 	m0[ 4] = side[1];
 	m0[ 8] = side[2];
@@ -265,12 +265,47 @@ function mat4_lookAt(out, eye, at, up) {
 	m0[ 6] = -forw[1];
 	m0[10] = -forw[2];
 
-	var m1 = mat4_create();
-	mat4_identity(m1);
+	var m1 = esMat4_create();
+	esMat4_identity(m1);
 	m1[12] = -eye.x;
 	m1[13] = -eye.y;
 	m1[14] = -eye.z;
 
-	mat4_mul(out, m0, m1);
+	esMat4_mul(out, m0, m1);
+}
+
+function esMat4_perspective(out, fov, ratio, near, far) {
+	var size = near * Math.tan(fov * 0.5);
+	var left = -size;
+	var right = size;
+	var bottom = -size / ratio;
+	var top = size / ratio;
+
+	mat[ 0] = 2.0 * near / (right - left);
+	mat[ 1] = 0.0;
+	mat[ 2] = 0.0;
+	mat[ 3] = 0.0;
+	mat[ 4] = 0.0;
+	mat[ 5] = 2.0 * near / (top - bottom);
+	mat[ 6] = 0.0;
+	mat[ 7] = 0.0;
+	mat[ 8] = (right + left) / (right - left);
+	mat[ 9] = (top + bottom) / (top - bottom);
+	mat[10] = -(far + near) / (far - near);
+	mat[11] = -1.0;
+	mat[12] = 0.0;
+	mat[13] = 0.0;
+	mat[14] = -(2.0 * far * near) / (far - near);
+	mat[15] = 0.0;
+}
+
+function esMat4_camera(out, fov, ratio, near, far, eye, at, up) {
+	var persp = esMat4_create();
+	esMat4_perspective(persp, fov, ratio, near, far);
+
+	var look = esMat4_create();
+	esMat4_lookAt(look, eye, at, up);
+
+	esMat4_mul(out, look, persp);
 }
 
