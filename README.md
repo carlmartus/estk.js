@@ -10,10 +10,11 @@ Features
  * Shader loading
  * Media loading
  * Fullframe mode
+ * Vector operations
 
 Todo
 ====
- * Fullframe mode (mobile)
- * Texture creation assist
  * Projection tools
+ * Fullframe mode mobile, no scrolling and scaling
+ * Texture creation assist
 
