@@ -2,15 +2,16 @@
 
 <head>
 <meta charset="utf-8">
-<script type="text/javascript" src="../estk.min.js"></script>
+<script type="text/javascript" src="../estk.js"></script>
 
 <script type="x-shader/x-vertex" id="vertex">
 #version 100
 precision mediump float;
 attribute vec2 vert;
+uniform mat4 mvp;
 
 void main() {
-	gl_Position = vec4(vert, 0.0, 1.0);
+	gl_Position = mvp*vec4(vert, 0.0, 1.0);
 }
 </script>
 
@@ -38,11 +39,20 @@ function main() {
 	program.link();
 	program.use();
 
+	// Camera
+	var uniCam = program.getUniform('mvp');
+	var mat = esMat4_create();
+	esMat4_camera(mat, 1.5, 1.33, 0.1, 10.0,
+			esVec3_parse(-1.0, -2.0, 2,0),
+			esVec3_parse(0.0, 0.0, -1.0),
+			esVec3_parse(0.0, 0.0, 1.0));
+	gl.uniformMatrix4fv(uniCam, false, mat);
+
 	// Vbo
 	var vertData = new Float32Array([
 			0.0, 0.0,
-			0.1, 0.0,
-			0.0, 0.1,
+			1.0, 0.0,
+			0.0, 1.0,
 	]);
 	var vbo = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
@@ -55,7 +65,7 @@ function main() {
 	gl.enableVertexAttribArray(0);
 	gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
-	gl.drawArrays(gl.TRIANGES, 0, 3);
+	gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
 </script>
 </body>
