@@ -39,6 +39,7 @@ function main() {
 	var program = new esProgram(gl);
 	program.addShaderId('vertex', ES_VERTEX);
 	program.addShaderId('fragment', ES_FRAGMENT);
+	program.bindAttribute(0, 'vert');
 	program.link();
 	program.use();
 

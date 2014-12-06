@@ -24,6 +24,10 @@ function compileShader(gl, text, type) {
 	return shader;
 }
 
+esProgram.prototype.bindAttribute = function(id, name) {
+	this.gl.bindAttribLocation(this.program, id, name);
+}
+
 esProgram.prototype.addShaderId = function(idName, type) {
 	var text = document.getElementById(idName).text;
 	this.gl.attachShader(this.program, compileShader(this.gl, text, type));
