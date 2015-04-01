@@ -29,7 +29,10 @@ esProgram.prototype.bindAttribute = function(id, name) {
 }
 
 esProgram.prototype.addShaderId = function(idName, type) {
-	var text = document.getElementById(idName).text;
+	this.addShaderText(document.getElementById(idName).text, type);
+}
+
+esProgram.prototype.addShaderText = function(text, type) {
 	this.gl.attachShader(this.program, compileShader(this.gl, text, type));
 }
 
