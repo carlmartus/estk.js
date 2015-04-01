@@ -109,22 +109,27 @@ function esMat4_ortho(out, x0, y0, x1, y1) {
 }
 
 function esMat4_lookAt(out, eye, at, up) {
+	var forw_ = esVec3_create();
+	esVec3_sub(forw_, at, eye);
 	var forw = esVec3_create();
-	esVec3_sub(forw, at, eye);
-	esVec3_normalize(forw, forw);
+	esVec3_normalize(forw, forw_);
 
+	var side_ = esVec3_create();
+	esVec3_cross(side_, up, forw);
 	var side = esVec3_create();
-	esVec3_cross(side, up, forw);
-	esVec3_normalize(side, side);
+	esVec3_normalize(side, side_);
+
+	var upn = esVec3_create();
+	esVec3_cross(upn, side, forw);
 
 	var m0 = esMat4_create();
 	esMat4_identity(m0);
 	m0[ 0] = side[0];
 	m0[ 4] = side[1];
 	m0[ 8] = side[2];
-	m0[ 1] = up[0];
-	m0[ 5] = up[1];
-	m0[ 9] = up[2];
+	m0[ 1] = upn[0];
+	m0[ 5] = upn[1];
+	m0[ 9] = upn[2];
 	m0[ 2] = -forw[0];
 	m0[ 6] = -forw[1];
 	m0[10] = -forw[2];
