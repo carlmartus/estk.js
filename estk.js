@@ -275,7 +275,7 @@ function esMat4_lookAt(out, eye, at, up) {
 	esVec3_normalize(side, side_);
 
 	var upn = esVec3_create();
-	esVec3_cross(upn, side, forw);
+	esVec3_cross(upn, forw, side);
 
 	var m0 = esMat4_create();
 	esMat4_identity(m0);
