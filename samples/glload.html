@@ -1,0 +1,84 @@
+<html>
+
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="../estk.js"></script>
+
+<script type="x-shader/x-vertex" id="vertex">
+#version 100
+precision mediump float;
+attribute vec2 vert;
+varying vec2 uv;
+
+void main() {
+	uv = vert;
+	gl_Position = vec4(vert, 0.0, 1.0);
+}
+</script>
+
+<script type="x-shader/x-fragment" id="fragment">
+#version 100
+precision mediump float;
+varying vec2 uv;
+uniform sampler2D tex;
+
+void main() {
+	gl_FragColor = texture2D(tex, uv);
+}
+</script>
+</head>
+
+<body onload="main()">
+<canvas width="400" height="300" id="can"></canvas>
+
+<script>
+var gl;
+
+function downloaded() {
+
+	// Shader
+	var program = new esProgram(gl);
+	program.addShaderId('vertex', ES_VERTEX);
+	program.addShaderId('fragment', ES_FRAGMENT);
+	program.link();
+	program.use();
+
+	gl.uniform1i(program.getUniform('tex'), 0);
+
+	// Vbo
+	var vertData = new Float32Array([
+			0.0, 0.0,
+			1.0, 0.0,
+			0.0, 1.0,
+			1.0, 1.0,
+	]);
+	var vbo = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+	gl.bufferData(gl.ARRAY_BUFFER, vertData, gl.STATIC_DRAW);
+
+	gl.clearColor(0.6, 0.7, 0.8, 1.0);
+	gl.clear(gl.COLOR_BUFFER_BIT);
+
+	// Draw
+	gl.enableVertexAttribArray(0);
+	gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+	gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+}
+
+function main() {
+	gl = esInitGl('can');
+
+	// Start download
+	var lod = new esLoad();
+	img1 = lod.loadTexture(gl, 'img1.png', gl.LINEAR, gl.LINEAR);
+	lod.downloadWithGlScreen(gl, downloaded);
+
+	// Set texture
+	gl.bindTexture(gl.TEXTURE_2D, img1);
+}
+</script>
+</body>
+
+</html>
+
