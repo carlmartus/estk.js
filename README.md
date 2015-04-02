@@ -17,4 +17,5 @@ Features
 Todo
 ====
  * Fullframe mode mobile, no scrolling and scaling
+ * Simple loading screen
 
