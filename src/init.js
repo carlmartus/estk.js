@@ -23,17 +23,15 @@ function esInitSw(tagId) {
 function esNextFrame(func) {
 	var lastTime = Date.now();
 
-	var requestAnimFrame = (function(){
-		return
-			window.requestAnimationFrame || 
-			window.webkitRequestAnimationFrame || 
-			window.mozRequestAnimationFrame || 
-			window.oRequestAnimationFrame || 
-			window.msRequestAnimationFrame || 
-			function(callback) {
-				window.setTimeout(callback, 1000.0 / 60.0);
-			};
-	});
+	var requestAnimFrame;
+	if (window && window.requestAnimationFrame) {
+		requestAnimationFrame = window.requestAnimationFrame;
+	} else {
+		requestAnimationFrame = function(callback) {
+			window.setTimeout(callback, 1000.0 / 60.0);
+		};
+
+	}
 
 	function clo() {
 		var now = Date.now();
