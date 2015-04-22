@@ -1,14 +1,14 @@
-function esInitGl(tagId) {
+function esInitGl(tagId, extra) {
 	var tag = document.getElementById(tagId);
 
 	var gl = null;
 	try {
-		gl = tag.getContext('webgl');
+		gl = tag.getContext('webgl', extra);
 	} catch (e) {}
 
 	if (gl == null) {
 		try {
-			gl = tag.getContext('experimental-webgl');
+			gl = tag.getContext('experimental-webgl', extra);
 		} catch (e) {}
 	}
 
