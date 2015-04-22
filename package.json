@@ -1,0 +1,28 @@
+{
+  "name": "estk.js",
+  "version": "1.0.0",
+  "description": "WebGL browser side toolkit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carlmartus/estk.js.git"
+  },
+  "keywords": [
+    "webgl",
+    "html5",
+    "game",
+    "3d",
+    "opengl",
+    "es",
+    "gl"
+  ],
+  "author": "Martin Sandgren",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carlmartus/estk.js/issues"
+  },
+  "dependencies": {
+	  "gulp": "3.8.11",
+	  "gulp-uglify": "1.2.0",
+	  "gulp-concat": "2.5.2"
+  }
+}

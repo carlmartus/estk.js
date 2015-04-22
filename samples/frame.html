@@ -60,7 +60,7 @@ function frame(frameTime) {
 }
 
 function main() {
-	gl = esInitGl('can');
+	gl = esInitGl('can', { antialias: true });
 	esNextFrame(frame);
 
 	startTime = Date.now() * 0.001;

@@ -15,18 +15,21 @@ esLoad.prototype.loadImage = function(url) {
 	return obj;
 }
 
-esLoad.prototype.loadTexture = function(gl, url, filterMag, filterMin) {
+esLoad.prototype.loadTexture = function(gl, url, filterMag, filterMin, generateMipMap) {
 	var tex = gl.createTexture();
 	this.list.push([tex, url, ES_LOAD_TEXTURE]);
 	gl.bindTexture(gl.TEXTURE_2D, tex);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filterMag);
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filterMag);
+	if (generateMipMap) {
+		gl.generateMipmap(gl.TEXTURE_2D);
+	}
 	return tex;
 }
 
 esLoad.prototype.loadAudio = function(url) {
 	var obj = new Audio();
-	this.list.push([obj, url, ES_LOAD_TEXTURE]);
+	this.list.push([obj, url, ES_LOAD_AUDIO]);
 	return obj;
 }
 
