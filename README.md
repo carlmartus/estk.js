@@ -1,8 +1,8 @@
-# Estk.js
+# Estk.js - v2.0.0
 
 Webgl toolkit for easier and faster development.
 
-# Features
+## Features
  * WebGL canvas initialization
  * Game loop controll
  * Shader loading
@@ -11,7 +11,7 @@ Webgl toolkit for easier and faster development.
  * Vector and matrix operations
  * Camera perspective tools
 
-# Todo
+## Todo
  * Generate mipmaps as texture loading parameter
  * Fullframe mode mobile, no scrolling and scaling
  * Real fullscreen mode
