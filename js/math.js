@@ -1,3 +1,48 @@
+// Vector 2 component
+
+function esVec2_create() {
+	return new Float32Array([0.0, 0.0]);
+}
+
+function esVec2_parse(x, y) {
+	return new Float32Array([x, y]);
+}
+
+function esVec2_add(out, v0, v1) {
+	out[0] = v0[0] + v1[0];
+	out[1] = v0[1] + v1[1];
+}
+
+function esVec2_sub(out, v0, v1) {
+	out[0] = v0[0] - v1[0];
+	out[1] = v0[1] - v1[1];
+}
+
+function esVec2_mulk(out, v, k) {
+	out[0] = k*v[0];
+	out[1] = k*v[1];
+}
+
+function esVec2_length(v) {
+	return Math.sqrt(v[0]*v[0] + v[1]*v[1]);
+}
+
+function esVec2_dot(v0, v1) {
+	return v0[0]*v1[0] + v0[1]*v1[1];
+}
+
+function esVec2_isZero(v) {
+	return v[0]==0.0 && v[1]==0.0;
+}
+
+function esVec3_normalize(out, v, len) {
+	var inv = 1.0 / esVec2_length(v);
+	if (len) inv *= len;
+	out[0] = inv*v[0];
+	out[1] = inv*v[1];
+}
+
+
 // Vector 3 components
 // ===================
 
@@ -45,12 +90,14 @@ function esVec3_cross(out, v0, v1) {
 	out[2] = v0[0]*v1[1] - v0[1]*v1[0];
 }
 
-function esVec3_normalize(out, v) {
+function esVec3_normalize(out, v, len) {
 	var inv = 1.0 / esVec3_length(v);
+	if (len) inv *= len;
 	out[0] = inv*v[0];
 	out[1] = inv*v[1];
 	out[2] = inv*v[2];
 }
+
 
 // Martix 4x4 component
 function esMat4_create() {
