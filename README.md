@@ -13,7 +13,7 @@ Webgl toolkit for easier and faster development.
 
 ## Todo
  - [ ] Generate mipmaps as texture loading parameter
- - [x] Fullframe mode mobile, no scrolling and scaling
+ - [ ] Fullframe mode mobile, no scrolling and scaling
  - [ ] Real fullscreen mode
  - [ ] Shader loading with dependincies
  - [ ] Shader with attribute dictionary
