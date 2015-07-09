@@ -12,13 +12,13 @@ Webgl toolkit for easier and faster development.
  * Camera perspective tools
 
 ## Todo
- * Generate mipmaps as texture loading parameter
- * Fullframe mode mobile, no scrolling and scaling
- * Real fullscreen mode
- * Shader loading with dependincies
- * Shader with attribute dictionary
- * Quaternion operations
- * Isometric camera
+ - [ ] Generate mipmaps as texture loading parameter
+ - [x] Fullframe mode mobile, no scrolling and scaling
+ - [ ] Real fullscreen mode
+ - [ ] Shader loading with dependincies
+ - [ ] Shader with attribute dictionary
+ - [ ] Quaternion operations
+ - [ ] Isometric camera
 
 # Changelog
 ## v2.0.0
