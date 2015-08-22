@@ -35,7 +35,12 @@ function esVec2_isZero(v) {
 	return v[0]==0.0 && v[1]==0.0;
 }
 
-function esVec3_normalize(out, v, len) {
+function esVec2_orthogonal(out, v) {
+	out[0] = v[1];
+	out[1] = -v[0];
+}
+
+function esVec2_normalize(out, v, len) {
 	var inv = 1.0 / esVec2_length(v);
 	if (len) inv *= len;
 	out[0] = inv*v[0];
